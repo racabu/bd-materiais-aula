@@ -92,3 +92,26 @@
 2018-06-18T15:41:43.951-0300 I COMMAND  [conn1] dropDatabase mymongo - dropping 0 collections
 2018-06-18T15:41:43.963-0300 I COMMAND  [conn1] dropDatabase mymongo - finished
 2018-06-18T15:44:39.687-0300 I COMMAND  [conn1] CMD: validate mymongo.contacts
+2018-06-18T17:29:04.285-0300 I NETWORK  [listener] connection accepted from 127.0.0.1:60778 #4 (2 connections now open)
+2018-06-18T17:29:04.318-0300 I NETWORK  [conn4] end connection 127.0.0.1:60778 (1 connection now open)
+2018-06-18T17:30:21.595-0300 I NETWORK  [conn1] end connection 127.0.0.1:59094 (0 connections now open)
+2018-06-18T17:32:19.477-0300 I NETWORK  [listener] connection accepted from 127.0.0.1:60817 #5 (1 connection now open)
+2018-06-18T17:32:19.514-0300 I STORAGE  [conn5] createCollection: test.restaurants with generated UUID: cf872525-a92e-4671-8237-2acb6b363e7c
+2018-06-18T17:32:19.884-0300 I NETWORK  [conn5] end connection 127.0.0.1:60817 (0 connections now open)
+2018-06-18T17:32:31.697-0300 I NETWORK  [listener] connection accepted from 127.0.0.1:60821 #6 (1 connection now open)
+2018-06-18T17:32:31.956-0300 I STORAGE  [conn6] createCollection: test.neighborhoods with generated UUID: 6870412d-46c3-4330-8ec8-c6a7933bd9d2
+2018-06-18T17:32:31.998-0300 I NETWORK  [conn6] end connection 127.0.0.1:60821 (0 connections now open)
+2018-06-18T17:37:55.635-0300 I NETWORK  [listener] connection accepted from 127.0.0.1:60978 #7 (1 connection now open)
+2018-06-18T17:37:55.636-0300 I NETWORK  [conn7] received client metadata from 127.0.0.1:60978 conn7: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.5" }, os: { type: "Windows", name: "Microsoft Windows 10", architecture: "x86_64", version: "10.0 (build 15063)" } }
+2018-06-18T17:38:11.363-0300 I INDEX    [conn7] build index on: test.restaurants properties: { v: 2, key: { location: "2dsphere" }, name: "location_2dsphere", ns: "test.restaurants", 2dsphereIndexVersion: 3 }
+2018-06-18T17:38:11.364-0300 I INDEX    [conn7] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2018-06-18T17:38:11.603-0300 I INDEX    [conn7] build index done.  scanned 25359 total records. 0 secs
+2018-06-18T17:38:11.604-0300 I COMMAND  [conn7] command test.$cmd appName: "MongoDB Shell" command: createIndexes { createIndexes: "restaurants", indexes: [ { key: { location: "2dsphere" }, name: "location_2dsphere" } ], $db: "test" } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 1, w: 1 } }, Database: { acquireCount: { W: 1 } }, Collection: { acquireCount: { w: 1 } } } protocol:op_msg 271ms
+2018-06-18T17:38:22.778-0300 I INDEX    [conn7] build index on: test.neighborhoods properties: { v: 2, key: { geometry: "2dsphere" }, name: "geometry_2dsphere", ns: "test.neighborhoods", 2dsphereIndexVersion: 3 }
+2018-06-18T17:38:22.779-0300 I INDEX    [conn7] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2018-06-18T17:38:23.946-0300 I INDEX    [conn7] build index done.  scanned 195 total records. 1 secs
+2018-06-18T17:38:23.946-0300 I COMMAND  [conn7] command test.$cmd appName: "MongoDB Shell" command: createIndexes { createIndexes: "neighborhoods", indexes: [ { key: { geometry: "2dsphere" }, name: "geometry_2dsphere" } ], $db: "test" } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 1, w: 1 } }, Database: { acquireCount: { W: 1 } }, Collection: { acquireCount: { w: 1 } }, Metadata: { acquireCount: { W: 1 } } } protocol:op_msg 1197ms
+2018-06-18T19:34:12.154-0300 I NETWORK  [conn7] end connection 127.0.0.1:60978 (0 connections now open)
+2018-06-18T19:34:24.581-0300 I NETWORK  [listener] connection accepted from 127.0.0.1:61350 #8 (1 connection now open)
+2018-06-18T19:34:24.581-0300 I NETWORK  [conn8] received client metadata from 127.0.0.1:61350 conn8: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.5" }, os: { type: "Windows", name: "Microsoft Windows 10", architecture: "x86_64", version: "10.0 (build 15063)" } }
+2018-06-18T19:55:07.632-0300 I NETWORK  [conn8] end connection 127.0.0.1:61350 (0 connections now open)
