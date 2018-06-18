@@ -1,0 +1,3 @@
+REM INSERTING into EXPORT_TABLE
+SET DEFINE OFF;
+Insert into EXPORT_TABLE (TESTE_DATA) values ('Quem nasceu no dia 1 Dezembro 1978 têm  14444 dias de vida');

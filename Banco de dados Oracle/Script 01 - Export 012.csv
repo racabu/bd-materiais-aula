@@ -1,0 +1,3 @@
+REM INSERTING into EXPORT_TABLE
+SET DEFINE OFF;
+Insert into EXPORT_TABLE ("NOME COMPLETO") values ('Rafael Bueno');

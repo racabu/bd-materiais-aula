@@ -1,0 +1,16 @@
+REM INSERTING into EXPORT_TABLE
+SET DEFINE OFF;
+Insert into EXPORT_TABLE (NOME,DEPARTAMENTO,SALARIO,"COMISSÃO",INICIO) values ('Yuri Gagari','50','23567,98','25',to_date('01/01/99','DD/MM/RR'));
+Insert into EXPORT_TABLE (NOME,DEPARTAMENTO,SALARIO,"COMISSÃO",INICIO) values ('Gustavo Lopes','50','22541','21',to_date('15/12/08','DD/MM/RR'));
+Insert into EXPORT_TABLE (NOME,DEPARTAMENTO,SALARIO,"COMISSÃO",INICIO) values ('Dayse Soares','12','8500','3',to_date('22/12/04','DD/MM/RR'));
+Insert into EXPORT_TABLE (NOME,DEPARTAMENTO,SALARIO,"COMISSÃO",INICIO) values ('Larissa Almeira','12','8500','3',to_date('22/10/06','DD/MM/RR'));
+Insert into EXPORT_TABLE (NOME,DEPARTAMENTO,SALARIO,"COMISSÃO",INICIO) values ('Simone Batista','50','6985,63','7',to_date('18/12/00','DD/MM/RR'));
+Insert into EXPORT_TABLE (NOME,DEPARTAMENTO,SALARIO,"COMISSÃO",INICIO) values ('Rogerio Reis Lima','33','5145,74','3',to_date('13/03/02','DD/MM/RR'));
+Insert into EXPORT_TABLE (NOME,DEPARTAMENTO,SALARIO,"COMISSÃO",INICIO) values ('Beatriz Oliveira','12','4500','3',to_date('22/11/04','DD/MM/RR'));
+Insert into EXPORT_TABLE (NOME,DEPARTAMENTO,SALARIO,"COMISSÃO",INICIO) values ('Carlo Noronha','42','2145,74','3',to_date('13/03/02','DD/MM/RR'));
+Insert into EXPORT_TABLE (NOME,DEPARTAMENTO,SALARIO,"COMISSÃO",INICIO) values ('Eduardo Satoru Sakai','33','2145,74','3',to_date('13/03/02','DD/MM/RR'));
+Insert into EXPORT_TABLE (NOME,DEPARTAMENTO,SALARIO,"COMISSÃO",INICIO) values ('Aline de Oliveira','11','2145,74','3',to_date('13/03/02','DD/MM/RR'));
+Insert into EXPORT_TABLE (NOME,DEPARTAMENTO,SALARIO,"COMISSÃO",INICIO) values ('Jose Carlos da Silva','42','2145,74','3',to_date('13/04/03','DD/MM/RR'));
+Insert into EXPORT_TABLE (NOME,DEPARTAMENTO,SALARIO,"COMISSÃO",INICIO) values ('MariaLinda Sauro','42','2145,74','3',to_date('13/03/01','DD/MM/RR'));
+Insert into EXPORT_TABLE (NOME,DEPARTAMENTO,SALARIO,"COMISSÃO",INICIO) values ('Eleonora Sintra','33','2145,74','3',to_date('13/03/02','DD/MM/RR'));
+Insert into EXPORT_TABLE (NOME,DEPARTAMENTO,SALARIO,"COMISSÃO",INICIO) values ('Ricardo Genaro','11','1145','3',to_date('13/03/02','DD/MM/RR'));
