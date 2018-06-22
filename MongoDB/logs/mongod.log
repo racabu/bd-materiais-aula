@@ -115,3 +115,30 @@
 2018-06-18T19:34:24.581-0300 I NETWORK  [listener] connection accepted from 127.0.0.1:61350 #8 (1 connection now open)
 2018-06-18T19:34:24.581-0300 I NETWORK  [conn8] received client metadata from 127.0.0.1:61350 conn8: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.5" }, os: { type: "Windows", name: "Microsoft Windows 10", architecture: "x86_64", version: "10.0 (build 15063)" } }
 2018-06-18T19:55:07.632-0300 I NETWORK  [conn8] end connection 127.0.0.1:61350 (0 connections now open)
+2018-06-22T11:58:21.489-0300 I NETWORK  [listener] connection accepted from 127.0.0.1:50533 #9 (1 connection now open)
+2018-06-22T11:58:21.491-0300 I NETWORK  [conn9] received client metadata from 127.0.0.1:50533 conn9: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.5" }, os: { type: "Windows", name: "Microsoft Windows 10", architecture: "x86_64", version: "10.0 (build 15063)" } }
+2018-06-22T12:05:47.413-0300 I NETWORK  [listener] connection accepted from 127.0.0.1:50704 #10 (2 connections now open)
+2018-06-22T12:05:47.846-0300 I STORAGE  [conn10] createCollection: posicoes.things with generated UUID: 3b8a3725-462f-47f3-9891-1ee6886b1004
+2018-06-22T12:05:47.906-0300 I NETWORK  [conn10] end connection 127.0.0.1:50704 (1 connection now open)
+2018-06-22T12:06:15.330-0300 I NETWORK  [listener] connection accepted from 127.0.0.1:50711 #11 (2 connections now open)
+2018-06-22T12:06:15.573-0300 I STORAGE  [conn11] createCollection: times.things with generated UUID: 2d565acf-b9a9-4353-92fc-3f42ebbaec11
+2018-06-22T12:06:15.688-0300 I NETWORK  [conn11] end connection 127.0.0.1:50711 (1 connection now open)
+2018-06-22T12:27:37.118-0300 I NETWORK  [listener] connection accepted from 127.0.0.1:58760 #12 (2 connections now open)
+2018-06-22T12:27:37.729-0300 I STORAGE  [conn12] createCollection: dados_agregados_limpos.things with generated UUID: 53a70963-efeb-4f61-af23-ca8b4e187fd0
+2018-06-22T12:27:37.962-0300 I COMMAND  [conn12] command dados_agregados_limpos.things command: insert { insert: "things", writeConcern: { getLastError: 1, w: 1 }, ordered: false, $db: "dados_agregados_limpos" } ninserted:1000 keysInserted:1000 numYields:0 reslen:44 locks:{ Global: { acquireCount: { r: 18, w: 18 } }, Database: { acquireCount: { w: 17, W: 1 } }, Collection: { acquireCount: { w: 17 } } } protocol:op_query 234ms
+2018-06-22T12:27:39.662-0300 I NETWORK  [conn12] end connection 127.0.0.1:58760 (1 connection now open)
+2018-06-22T12:31:36.972-0300 I NETWORK  [conn9] end connection 127.0.0.1:50533 (0 connections now open)
+2018-06-22T12:31:40.935-0300 I NETWORK  [listener] connection accepted from 127.0.0.1:58818 #13 (1 connection now open)
+2018-06-22T12:31:40.941-0300 I NETWORK  [conn13] received client metadata from 127.0.0.1:58818 conn13: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.5" }, os: { type: "Windows", name: "Microsoft Windows 10", architecture: "x86_64", version: "10.0 (build 15063)" } }
+2018-06-22T12:50:06.730-0300 I NETWORK  [listener] connection accepted from 127.0.0.1:49956 #14 (2 connections now open)
+2018-06-22T12:50:07.291-0300 I STORAGE  [conn14] createCollection: cartola.scouts with generated UUID: d3d5dd8d-2de2-4f7a-ac23-77e4d7dfc6cd
+2018-06-22T12:50:08.851-0300 I NETWORK  [conn14] end connection 127.0.0.1:49956 (1 connection now open)
+2018-06-22T12:50:42.732-0300 I NETWORK  [listener] connection accepted from 127.0.0.1:49963 #15 (2 connections now open)
+2018-06-22T12:50:42.960-0300 I STORAGE  [conn15] createCollection: cartola.posicoes with generated UUID: b1343b25-19ba-4d90-9237-bb38b8226ba7
+2018-06-22T12:50:43.016-0300 I NETWORK  [conn15] end connection 127.0.0.1:49963 (1 connection now open)
+2018-06-22T12:51:06.466-0300 I NETWORK  [listener] connection accepted from 127.0.0.1:49967 #16 (2 connections now open)
+2018-06-22T12:51:06.885-0300 I STORAGE  [conn16] createCollection: cartola.times with generated UUID: 3b78713e-914f-4f51-bbad-dc340098154c
+2018-06-22T12:51:06.952-0300 I NETWORK  [conn16] end connection 127.0.0.1:49967 (1 connection now open)
+2018-06-22T13:08:54.765-0300 E QUERY    [js] ReferenceError: Apelido is not defined :
+@:1:15
+2018-06-22T13:33:12.478-0300 I NETWORK  [conn13] end connection 127.0.0.1:58818 (0 connections now open)
