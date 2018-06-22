@@ -1,0 +1,187 @@
+// --------------------------------------------------------------------------------------------------
+// Carregando o matches.csv e convertendo os dados da tabela em nos e relacionamentos
+// --------------------------------------------------------------------------------------------------
+USING PERIODIC COMMIT 1000
+LOAD CSV WITH HEADERS FROM "file:C:/Users/Adriana/Documents/FIAP/Neo4j/copa/matches.csv" AS csvLine
+WITH csvLine, toInt(csvLine.match_number) AS matchNumber
+
+MERGE (match:Partida {id: csvLine.id})
+SET match.placar_casa = csvLine.h_score,
+    match.placar_visitante = csvLine.a_score,
+    match.publico = csvLine.attendance,
+    match.data = csvLine.date,
+    match.descricao = csvLine.home + " vs. " + csvLine.away,
+    match.numero = toInt(matchNumber)
+
+MERGE (home:Pais {nome: csvLine.home})
+MERGE (match)-[:TIME_DA_CASA]->(home)
+MERGE (match)<-[:JOGOU_EM]-(home)
+
+MERGE (away:Pais {nome: csvLine.away})
+MERGE (match)-[:TIME_VISITANTE]->(away)
+MERGE (match)<-[:JOGOU_EM]-(away)
+
+MERGE (year:Ano {year: toInt(csvLine.year)})
+
+MERGE (worldCup:CopaDoMundo {nome: csvLine.world_cup})
+ON CREATE SET worldCup.ano = toInt(csvLine.year)
+
+MERGE (match)<-[:COMPOSTA_POR]-(worldCup)
+
+FOREACH(i IN CASE WHEN csvLine.host = "Korea/Japan" THEN [1] ELSE [] END |
+	MERGE (host1:Pais {nome: "Korea Republic"})
+	MERGE (host2:Pais {nome: "Japan"})
+	MERGE (host1)<-[:ORGANIZADA_POR]-(worldCup)
+	MERGE (host2)<-[:ORGANIZADA_POR]-(worldCup))
+
+FOREACH(i IN CASE WHEN csvLine.host <> "Korea/Japan" THEN [1] ELSE [] END |
+	MERGE (host:Pais {nome: csvLine.host})
+	MERGE (host)<-[:ORGANIZADA_POR]-(worldCup))
+
+MERGE (year)<-[:REALIZADA_EM]-(worldCup)
+
+MERGE (stadium:Estadio {nome: csvLine.stadium})
+MERGE (match)-[:DISPUTADA_NO]->(stadium)
+
+MERGE (p:Fase {nome: csvLine.phase})
+MERGE (match)-[:NA_FASE]->(p);
+
+// --------------------------------------------------------------------------------------------------
+// Adicionando indices
+// --------------------------------------------------------------------------------------------------
+CREATE INDEX ON :Partida(id);
+CREATE INDEX ON :CopaDoMundo(nome);
+CREATE INDEX ON :Estadio(nome);
+CREATE INDEX ON :Pais(nome);
+CREATE INDEX ON :Fase(nome);
+CREATE INDEX ON :Jogador(id);
+CREATE INDEX ON :Jogador(nome);
+
+// --------------------------------------------------------------------------------------------------
+// Carregando o squads.csv e convertendo os dados da tabela em nos e relacionamentos
+// --------------------------------------------------------------------------------------------------
+USING PERIODIC COMMIT 1000
+LOAD CSV WITH HEADERS FROM "file:C:/Users/Adriana/Documents/FIAP/Neo4j/copa/squads.csv" AS csvLine
+
+MATCH (y:Ano {year: toInt(csvLine.year)})<-[:REALIZADA_EM]-(worldCup),
+      (c:Pais {nome: csvLine.country})
+
+MERGE (squad:Selecao {nome: c.nome + " selecao para a " + worldCup.nome })
+MERGE (c)-[:CONVOCOU]->(squad)-[:PARA_A_COPA]->(worldCup)
+
+MERGE (p:Jogador {id: csvLine.player_id})
+ON CREATE SET p.nome = csvLine.player_name
+
+MERGE (p)-[:JOGOU_POR]->(squad);
+
+// --------------------------------------------------------------------------------------------------
+// Carregando o lineups.csv e convertendo os dados da tabela em nos e relacionamentos
+// --------------------------------------------------------------------------------------------------
+USING PERIODIC COMMIT 1000
+LOAD CSV WITH HEADERS FROM "file:C:/Users/Adriana/Documents/FIAP/Neo4j/copa/lineups.csv" AS csvLine
+
+MATCH (home)<-[:TIME_DA_CASA]-(match:Partida {id: csvLine.match_id})-[:TIME_VISITANTE]->(away)
+MATCH (player:Jogador {id: csvLine.player_id})
+MATCH (wc:CopaDoMundo {nome: csvLine.world_cup})
+MATCH (wc)<-[:PARA_A_COPA]-()<-[:JOGOU_POR]-(player)
+
+// home players
+FOREACH(n IN (CASE csvLine.team WHEN "home" THEN [1] else [] END) |
+	FOREACH(o IN (CASE csvLine.type WHEN "starting" THEN [1] else [] END) |
+		MERGE (match)-[:TIME_DA_CASA]->(home)
+		MERGE (player)-[:TITULAR]->(Estatisticas)-[:NA_PARTIDA]->(match)
+	)
+
+	FOREACH(o IN (CASE csvLine.type WHEN "sub" THEN [1] else [] END) |
+		MERGE (match)-[:TIME_DA_CASA]->(home)
+		MERGE (player)-[:RESERVA]->(Estatisticas)-[:NA_PARTIDA]->(match)
+	)
+)
+
+// away players
+FOREACH(n IN (CASE csvLine.team WHEN "away" THEN [1] else [] END) |
+	FOREACH(o IN (CASE csvLine.type WHEN "starting" THEN [1] else [] END) |
+		MERGE (match)-[:TIME_VISITANTE]->(away)
+		MERGE (player)-[:TITULAR]->(Estatisticas)-[:NA_PARTIDA]->(match)
+	)
+
+	FOREACH(o IN (CASE csvLine.type WHEN "sub" THEN [1] else [] END) |
+		MERGE (match)-[:TIME_VISITANTE]->(away)
+		MERGE (player)-[:RESERVA]->(Estatisticas)-[:NA_PARTIDA]->(match)
+	)
+);
+
+// --------------------------------------------------------------------------------------------------
+// Carregando o events.csv e convertendo os dados da tabela em nos e relacionamentos
+// --------------------------------------------------------------------------------------------------
+USING PERIODIC COMMIT 1000
+LOAD CSV WITH HEADERS FROM "file:C:/Users/Adriana/Documents/FIAP/Neo4j/copa/events.csv" AS csvLine
+
+MATCH (home)<-[:TIME_DA_CASA]-(match:Partida {id: csvLine.match_id})-[:TIME_VISITANTE]->(away)
+
+MATCH (player:Jogador {id: csvLine.player_id})-[:JOGOU_POR]->(squad)<-[:CONVOCOU]-(team)
+MATCH (player)-[:TITULA|:RESERVA]->(Estatisticas)-[:NA_PARTIDA]->(match)
+
+// goals
+FOREACH(n IN (CASE WHEN csvLine.type IN ["penalty", "goal", "owngoal"] THEN [1] else [] END) |
+	FOREACH(t IN CASE WHEN team = home THEN [home] ELSE [away] END |
+		MERGE (Estatisticas)-[:MARCOU_UM_GOL]->(penalty:Gol {tempo: csvLine.time, tipo: csvLine.type})
+	)
+)
+
+// cards
+FOREACH(n IN (CASE WHEN csvLine.type IN ["yellow", "red", "yellowred"] THEN [1] else [] END) |
+	FOREACH(t IN CASE WHEN team = home THEN [home] ELSE [away] END |
+		MERGE (Estatisticas)-[:RECEBEU_CARTAO]->(Cartao {tempo: csvLine.time, tipo: csvLine.type})
+	)
+);
+
+// --------------------------------------------------------------------------------------------------
+// Criando relacionamentos "venceu"
+// --------------------------------------------------------------------------------------------------
+MATCH (visitante)<-[:TIME_VISITANTE]-(partida:Partida)-[:TIME_DA_CASA]->(tcasa)
+MATCH (partida)<-[:COMPOSTA_POR]-(copa)
+MATCH (copa)<-[:PARA_A_COPA]-(selecaoCasa)<-[:CONVOCOU]-(tcasa),
+      (copa)<-[:PARA_A_COPA]-(selecaoVisitante)<-[:CONVOCOU]-(visitante)
+
+FOREACH(n IN (CASE WHEN toInt(partida.placar_casa) > toInt(partida.placar_visitante) THEN [1] else [] END) |
+	MERGE (selecaoCasa)-[:VENCEU {placar: partida.placar_casa + "-" + partida.placar_visitante}]->(selecaoVisitante)
+)
+
+FOREACH(n IN (CASE WHEN toInt(partida.placar_visitante) > toInt(partida.placar_casa) THEN [1] else [] END) |
+	MERGE (selecaoVisitante)-[:VENCEU {placar: partida.placar_visitante + "-" + partida.placar_casa}]->(selecaoCasa)
+);
+
+// --------------------------------------------------------------------------------------------------
+// EXERCICIOS
+// --------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
+// Estadios com mais gols (top 10)
+// --------------------------------------------------------------------------------------------------
+MATCH(p:Partida)-[:DISPUTADA_NO]->(e:Estadio)
+RETURN e.nome AS Estadio, SUM(toInt(p.placar_casa)) + SUM(toInt(p.placar_visitante)) AS Gols
+ORDER BY Gols DESC
+LIMIT 10;
+
+// --------------------------------------------------------------------------------------------------
+// Distancia entre paises (em nos)
+// --------------------------------------------------------------------------------------------------
+MATCH (p1:Pais),(p2:Pais),
+p = shortestPath((p1:Pais)-[*..15]-(p2:Pais))
+WHERE p1.nome <> p2.nome
+RETURN p1.nome AS Pais1, p2.nome AS Pais2, length(p) AS DistanciaEmNos
+ORDER BY Pais1, Pais2, DistanciaEmNos DESC;
+
+// Exemplo de caminho
+MATCH (p1:Pais),(p2:Pais),
+p = shortestPath((p1:Pais{nome:"Algeria"})-[*..15]-(p2:Pais{nome:"Cuba"}))
+RETURN p;
+
+// --------------------------------------------------------------------------------------------------
+// Jogadores que participaram em mais de uma copa (uma selecao por copa, logo, participaram de mais de uma selecao)
+// --------------------------------------------------------------------------------------------------
+MATCH(j:Jogador)-[:JOGOU_POR]->(s:Selecao)
+WITH j, COUNT(s) AS ParticipacoesCopas
+WHERE ParticipacoesCopas > 1
+RETURN j.nome, ParticipacoesCopas
+ORDER BY ParticipacoesCopas DESC, j.nome;
