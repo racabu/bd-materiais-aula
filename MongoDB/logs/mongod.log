@@ -142,3 +142,10 @@
 2018-06-22T13:08:54.765-0300 E QUERY    [js] ReferenceError: Apelido is not defined :
 @:1:15
 2018-06-22T13:33:12.478-0300 I NETWORK  [conn13] end connection 127.0.0.1:58818 (0 connections now open)
+2018-06-23T10:15:03.742-0300 W FTDC     [ftdc] Uncaught exception in 'FileRenameFailed: Access is denied' in full-time diagnostic data capture subsystem. Shutting down the full-time diagnostic data capture subsystem.
+2018-06-23T19:17:23.331-0300 I CONTROL  [serviceShutdown] got SERVICE_CONTROL_STOP request from Windows Service Control Manager, will terminate after current cmd ends
+2018-06-23T19:17:23.332-0300 I NETWORK  [serviceShutdown] shutdown: going to close listening sockets...
+2018-06-23T19:17:23.335-0300 I FTDC     [serviceShutdown] Shutting down full-time diagnostic data capture
+2018-06-23T19:17:23.340-0300 I STORAGE  [serviceShutdown] WiredTigerKVEngine shutting down
+2018-06-23T19:17:23.682-0300 I STORAGE  [serviceShutdown] shutdown: removing fs lock...
+2018-06-23T19:17:23.711-0300 I CONTROL  [serviceShutdown] now exiting
