@@ -142,3 +142,4 @@
 2018-06-22T13:08:54.765-0300 E QUERY    [js] ReferenceError: Apelido is not defined :
 @:1:15
 2018-06-22T13:33:12.478-0300 I NETWORK  [conn13] end connection 127.0.0.1:58818 (0 connections now open)
+2018-06-23T10:15:03.742-0300 W FTDC     [ftdc] Uncaught exception in 'FileRenameFailed: Access is denied' in full-time diagnostic data capture subsystem. Shutting down the full-time diagnostic data capture subsystem.
